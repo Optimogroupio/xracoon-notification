@@ -11,7 +11,7 @@ import java.sql.Timestamp;
 @Getter
 @Setter
 @SequenceGenerator(name = "templatesSeq", schema = "NOTIFIER", sequenceName = "NOTIFIER.SEQ_TEMPLATES", allocationSize = 1)
-public class Templates {
+public class Template {
 
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "templatesSeq")
