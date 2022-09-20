@@ -21,7 +21,7 @@ public class Template {
     private Timestamp registrationDate;
 
     @Column(name = "REGISTER_USER_ID")
-    private Timestamp registerUserId;
+    private Long registerUserId;
 
     @Column(name = "STATUS")
     private Long status;
