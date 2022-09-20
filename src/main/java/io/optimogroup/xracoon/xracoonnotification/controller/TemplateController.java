@@ -45,4 +45,18 @@ public class TemplateController {
                     HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
+
+    @DeleteMapping("{id}")
+    public ResponseEntity<?> deactivateTemplate(@PathVariable long id) {
+        try {
+            templateService.deactivateTemplate(id);
+            return new ResponseEntity<>(HttpStatus.OK);
+        } catch (Exception e) {
+            e.printStackTrace();
+            log.error("Error in TemplateController.class while deactivate template with id %s!".formatted(id));
+            return new ResponseEntity<>(e instanceof NotifierException ?
+                    NotificationExceptionResponse.builder().message(e.getMessage()) : "Error in TemplateController.class while deactivate template with id %s!".formatted(id),
+                    HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
 }

@@ -47,6 +47,17 @@ public class TemplateServiceImpl implements TemplateService {
     }
 
     @Override
+    public void deactivateTemplate(long id) {
+        try {
+            templateRepository.deleteById(id);
+        } catch (Exception e) {
+            e.printStackTrace();
+            log.error("Error in TemplateServiceImpl.class in method deactivateTemplate while deactivate template");
+            throw new NotifierException("Unknown error while while deactivate template with id %s".formatted(id));
+        }
+    }
+
+    @Override
     public void validateTemplateDto(TemplateDTO templateDTO) {
         if (!StringUtils.hasText(templateDTO.getDescriptionEng()) &&
                 !StringUtils.hasText(templateDTO.getDescriptionGeo()) &&

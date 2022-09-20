@@ -10,4 +10,6 @@ public interface TemplateService {
     void validateTemplateDto(TemplateDTO templateDTO);
 
     List<TemplateDTO> getAllTemplates();
+
+    void deactivateTemplate(long id);
 }
