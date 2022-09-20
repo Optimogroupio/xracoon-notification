@@ -8,6 +8,7 @@ import io.swagger.v3.oas.annotations.servers.Server;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.util.StringUtils;
+import org.webjars.NotFoundException;
 
 import javax.transaction.Transactional;
 import java.sql.Timestamp;
@@ -20,6 +21,13 @@ import java.util.List;
 public class TemplateServiceImpl implements TemplateService {
 
     private final TemplateRepository templateRepository;
+
+
+    @Override
+    public Template get(Long id) {
+        return templateRepository.findById(id)
+                .orElseThrow(() -> new NotFoundException("Template with id %s not found".formatted(id)));
+    }
 
     @Override
     @Transactional
@@ -37,7 +45,7 @@ public class TemplateServiceImpl implements TemplateService {
     @Override
     public List<TemplateDTO> getAllTemplates() {
         try {
-            return templateRepository.findAll()
+            return templateRepository.findAllByStatusIs(1L)
                     .stream().map(this::mapEntityToDto).toList();
         } catch (Exception e) {
             e.printStackTrace();
@@ -49,7 +57,8 @@ public class TemplateServiceImpl implements TemplateService {
     @Override
     public void deactivateTemplate(long id) {
         try {
-            templateRepository.deleteById(id);
+            Template template = get(id);
+            template.setStatus(0L);
         } catch (Exception e) {
             e.printStackTrace();
             log.error("Error in TemplateServiceImpl.class in method deactivateTemplate while deactivate template");
@@ -75,7 +84,7 @@ public class TemplateServiceImpl implements TemplateService {
         template.setDescriptionEng(templateDTO.getDescriptionEng());
         template.setDescriptionRu(templateDTO.getDescriptionRu());
         template.setDescriptionGeo(templateDTO.getDescriptionGeo());
-        template.setStatus(template.getStatus());
+        template.setStatus(1L);
         template.setMailSubject(templateDTO.getMailSubject());
         template.setSmsFrom(templateDTO.getSmsFrom());
         //will be changed
