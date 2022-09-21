@@ -7,6 +7,7 @@ import io.optimogroup.xracoon.xracoonnotification.repository.TemplateRepository;
 import io.swagger.v3.oas.annotations.servers.Server;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 import org.webjars.NotFoundException;
 
@@ -15,7 +16,7 @@ import java.sql.Timestamp;
 import java.time.LocalDateTime;
 import java.util.List;
 
-@Server
+@Service
 @RequiredArgsConstructor
 @Slf4j
 public class TemplateServiceImpl implements TemplateService {

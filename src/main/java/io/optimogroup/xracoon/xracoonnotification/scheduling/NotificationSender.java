@@ -1,7 +1,12 @@
 package io.optimogroup.xracoon.xracoonnotification.scheduling;
 
+import com.sendgrid.Email;
+import com.sendgrid.Mail;
 import io.optimogroup.xracoon.xracoonnotification.model.NotifiCationQueue;
+import io.optimogroup.xracoon.xracoonnotification.model.Template;
+import io.optimogroup.xracoon.xracoonnotification.service.NotificationSenderService;
 import io.optimogroup.xracoon.xracoonnotification.service.NotificationService;
+import io.optimogroup.xracoon.xracoonnotification.service.TemplateService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.scheduling.annotation.Scheduled;
@@ -15,14 +20,25 @@ import java.util.List;
 public class NotificationSender {
 
     private final NotificationService notificationService;
+    private final TemplateService templateService;
+    public final NotificationSenderService notificationSenderService;
 
     public List<NotifiCationQueue> getNotifications() {
         return notificationService
                 .getNotifications();
     }
 
+    public void sentEmails() {
+        for (NotifiCationQueue notification : getNotifications()) {
+            Template template = templateService.get(notification.getTemplateId());
+            Email emailFrom = new Email(template.getSmsFrom());
+            Email emailTo = new Email(notification.getEmailAddress());
+            notificationSenderService.sendEmail(emailFrom, template.getMailSubject(), emailTo, notification.getNotificationText(), notification.getId());
+        }
+    }
+
     @Scheduled(fixedDelay = 5000)
     public void sendNotification() {
-
+        sentEmails();
     }
 }

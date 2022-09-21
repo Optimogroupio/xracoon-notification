@@ -11,10 +11,8 @@ import java.util.List;
 public interface NotificationRepository extends JpaRepository<NotifiCationQueue, Long>,
         PagingAndSortingRepository<NotifiCationQueue, Long> {
 
-    List<NotifiCationQueue> findAllByStateIs(Long state, Pageable pageable);
+//    List<NotifiCationQueue> findAllByStateIs(Long state, Pageable pageable);
 
-    @Query("""
-            
-            """)
+    @Query(value = "SELECT * FROM NOTIFIER.NOTIFICATION_QUEUE FETCH FIRST 10 ROWS ONLY", nativeQuery = true)
     List<NotifiCationQueue> getNotifications();
 }

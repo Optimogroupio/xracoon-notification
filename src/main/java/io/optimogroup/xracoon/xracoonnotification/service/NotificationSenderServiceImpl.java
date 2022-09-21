@@ -13,7 +13,7 @@ public class NotificationSenderServiceImpl implements NotificationSenderService 
     private String emailApiKey;
 
     @Override
-    public void sendEmail(Email from, String subject, Email to, String description) {
+    public void sendEmail(Email from, String subject, Email to, String description, Long notificationId) {
         Content content = new Content("text/plain", description);
         Mail mail = new Mail(from, subject, to, content);
 
