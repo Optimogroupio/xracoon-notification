@@ -23,14 +23,14 @@ public class NotificationSenderServiceImpl implements NotificationSenderService 
 
     @Override
     public void sendEmail(Email from, String subject, Email to, String description, Long notificationId) {
-        Content content = new Content("text/plain", description);
-        Mail mail = new Mail(from, subject, to, content);
-
-        SendGrid sg = new SendGrid(emailApiKey);
-        Request request = new Request();
-        request.setMethod(Method.POST);
-        request.setEndpoint("mail/send");
         try {
+            Content content = new Content("text/plain", description);
+            Mail mail = new Mail(from, subject, to, content);
+
+            SendGrid sg = new SendGrid(emailApiKey);
+            Request request = new Request();
+            request.setMethod(Method.POST);
+            request.setEndpoint("mail/send");
             request.setBody(mail.build());
             Response response = sg.api(request);
             if (response != null) {
