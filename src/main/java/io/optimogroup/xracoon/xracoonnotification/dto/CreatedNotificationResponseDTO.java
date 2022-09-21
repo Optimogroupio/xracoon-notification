@@ -18,8 +18,7 @@ public class CreatedNotificationResponseDTO {
     private String messageId;
     private String parameters;
     private Timestamp regDate;
-    @Lob
-    private byte[] notificationText;
+    private String notificationText;
     private Long failedCounter;
-    private byte[] failedReason;
+    private String failedReason;
 }

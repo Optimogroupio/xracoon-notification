@@ -26,8 +26,8 @@ public class NotifiCationQueue {
     @Column(name = "EMAIL_ADDRESS")
     private String emailAddress;
 
-    @Column(name = "STATE")
-    private Long state;
+//    @Column(name = "STATE")
+//    private Long state;
 
     @Column(name = "SENT_DATE")
     private Timestamp sendDate;
@@ -46,11 +46,11 @@ public class NotifiCationQueue {
 
     @Column(name = "NOTIFICATION_TEXT")
     @Lob
-    private byte[] notificationText;
+    private String notificationText;
 
     @Column(name = "FAILED_COUNTER")
     private Long failedCounter;
 
     @Column(name = "FAILED_REASON")
-    private byte[] failedReason;
+    private String failedReason;
 }

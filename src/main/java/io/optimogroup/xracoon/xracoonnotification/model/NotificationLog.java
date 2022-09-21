@@ -47,5 +47,5 @@ public class NotificationLog {
 
     @Column(name = "NOTIFICATION_TEXT")
     @Lob
-    private byte[] notificationText;
+    private String notificationText;
 }

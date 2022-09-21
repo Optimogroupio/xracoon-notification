@@ -5,7 +5,6 @@ import io.optimogroup.xracoon.xracoonnotification.dto.Language;
 import io.optimogroup.xracoon.xracoonnotification.dto.NotificationDTO;
 import io.optimogroup.xracoon.xracoonnotification.exception.NotifierException;
 import io.optimogroup.xracoon.xracoonnotification.model.NotifiCationQueue;
-import io.optimogroup.xracoon.xracoonnotification.model.NotificationLog;
 import io.optimogroup.xracoon.xracoonnotification.model.Template;
 import io.optimogroup.xracoon.xracoonnotification.repository.NotificationRepository;
 import lombok.RequiredArgsConstructor;
@@ -47,6 +46,11 @@ public class NotificationServiceImpl implements NotificationService {
             throw new NotifierException("Email or Mobile fields are required!");
     }
 
+    @Override
+    public List<NotifiCationQueue> getNotifications() {
+        return notificationRepository.getNotifications();
+    }
+
     public NotifiCationQueue mapDtoToEntity(NotificationDTO notificationDTO) {
         NotifiCationQueue notifiCationQueue = new NotifiCationQueue();
         Template template = templateService.get(notificationDTO.getNotificationId());
@@ -64,7 +68,7 @@ public class NotificationServiceImpl implements NotificationService {
         notifiCationQueue.setEmailAddress(notificationDTO.getMail());
         notifiCationQueue.setPhoneNumber(notificationDTO.getPhoneNumber());
         notifiCationQueue.setRegDate(Timestamp.valueOf(LocalDateTime.now()));
-        notifiCationQueue.setState(0L);
+//        notifiCationQueue.setState(0L);
         return notifiCationQueue;
     }
 
@@ -83,8 +87,8 @@ public class NotificationServiceImpl implements NotificationService {
                 .build();
     }
 
-    public byte[] generateNotificationText(String description, List<String> parameters) {
-        if (parameters == null) return description.getBytes();
-        return description.formatted(parameters).getBytes();
+    public String generateNotificationText(String description, List<String> parameters) {
+        if (parameters == null) return description;
+        return description.formatted(parameters);
     }
 }
