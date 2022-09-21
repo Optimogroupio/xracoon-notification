@@ -15,6 +15,7 @@ repositories {
 dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter'
 	implementation 'com.sendgrid:sendgrid-java:4.0.1'
+	implementation group: 'com.fasterxml.jackson.core', name: 'jackson-databind', version: '2.0.1'
 	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
 	implementation 'org.springframework.boot:spring-boot-starter-web'
 	implementation 'org.springdoc:springdoc-openapi-ui:1.6.9'

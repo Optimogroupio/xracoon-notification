@@ -11,6 +11,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
+import org.webjars.NotFoundException;
 
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
@@ -49,6 +50,25 @@ public class NotificationServiceImpl implements NotificationService {
     @Override
     public List<NotifiCationQueue> getNotifications() {
         return notificationRepository.getNotifications();
+    }
+
+    @Override
+    public NotifiCationQueue deleteById(Long notificationId) {
+        try {
+            NotifiCationQueue notifiCationQueue = get(notificationId);
+            notificationRepository.deleteById(notificationId);
+            return notifiCationQueue;
+        } catch (Exception e) {
+            e.printStackTrace();
+            log.error("Unknown error while delete notification with id %s".formatted(notificationId));
+            return null;
+        }
+    }
+
+    @Override
+    public NotifiCationQueue get(Long notificationId) {
+        return notificationRepository.findById(notificationId)
+                .orElseThrow(() -> new NotFoundException("Notification not found with id %s".formatted(notificationId)));
     }
 
     public NotifiCationQueue mapDtoToEntity(NotificationDTO notificationDTO) {

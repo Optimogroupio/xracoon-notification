@@ -12,4 +12,8 @@ public interface NotificationService {
     void validateNotification(NotificationDTO notificationDTO);
 
     List<NotifiCationQueue> getNotifications();
+
+    NotifiCationQueue deleteById(Long notificationId);
+
+    NotifiCationQueue get(Long notificationId);
 }
