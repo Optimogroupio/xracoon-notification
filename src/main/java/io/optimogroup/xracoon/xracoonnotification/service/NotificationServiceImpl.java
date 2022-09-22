@@ -88,6 +88,7 @@ public class NotificationServiceImpl implements NotificationService {
         notifiCationQueue.setEmailAddress(notificationDTO.getMail());
         notifiCationQueue.setPhoneNumber(notificationDTO.getPhoneNumber());
         notifiCationQueue.setRegDate(Timestamp.valueOf(LocalDateTime.now()));
+        notifiCationQueue.setFailedCounter(0L);
 //        notifiCationQueue.setState(0L);
         return notifiCationQueue;
     }
