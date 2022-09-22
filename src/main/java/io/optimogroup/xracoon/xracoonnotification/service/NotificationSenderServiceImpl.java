@@ -87,11 +87,22 @@ public class NotificationSenderServiceImpl implements NotificationSenderService 
     public void sendSms(String subject, String destination, String description, Long notificationId) {
         try {
             retrofit2.Response<SmsOfficeResponse> response = smsofficeProxy.sendSms(smsApiKey, destination, sender, description).execute();
-            log.info("Response from smsoffice for notification {} is {}", notificationId, response.toString());
+            if (response.isSuccessful() && response.body() != null && response.body().getSuccess() != null && response.body().getSuccess()) {
+                notificationLogService.createNotificationLog(notificationService.deleteById(notificationId), response.body());
+                log.info("Response from smsoffice for notification {} is {}", notificationId, response.toString());
+            } else  {
+                NotifiCationQueue notifiCationQueue = notificationService.get(notificationId);
+                String failReasonText = "Unknown error while sending sms";
+                if(response != null && response.body() != null && response.body().getMessage() != null)
+                    failReasonText = response.body().getMessage();
+                Long FailReasonCounter = notifiCationQueue.getFailedCounter();
+                notifiCationQueue.setFailedReason(failReasonText);
+                notifiCationQueue.setFailedCounter(FailReasonCounter + 1);
+                log.error(failReasonText);
+            }
         } catch (IOException e) {
             e.printStackTrace();
             log.error("Error during sending request to smsoffice for notification {}", notificationId);
-            throw new RuntimeException(e);
         }
     }
 }

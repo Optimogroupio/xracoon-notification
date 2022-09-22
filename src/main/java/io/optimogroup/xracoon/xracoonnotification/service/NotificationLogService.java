@@ -1,6 +1,7 @@
 package io.optimogroup.xracoon.xracoonnotification.service;
 
 import io.optimogroup.xracoon.xracoonnotification.dto.EmailResDTO;
+import io.optimogroup.xracoon.xracoonnotification.dto.SmsOfficeResponse;
 import io.optimogroup.xracoon.xracoonnotification.model.NotifiCationQueue;
 
 /**
@@ -10,4 +11,6 @@ import io.optimogroup.xracoon.xracoonnotification.model.NotifiCationQueue;
 public interface NotificationLogService {
 
     void createNotificationLog(NotifiCationQueue deleteById, EmailResDTO emailResDTO);
+
+    void createNotificationLog(NotifiCationQueue deleteById, SmsOfficeResponse body);
 }
