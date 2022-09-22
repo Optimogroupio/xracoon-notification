@@ -37,9 +37,14 @@ public class NotificationSender {
     public void sentEmails() {
         for (NotifiCationQueue notification : getNotifications()) {
             Template template = templateService.get(notification.getTemplateId());
-            Email emailFrom = new Email(template.getSmsFrom());
-            Email emailTo = new Email(notification.getEmailAddress());
-            notificationSenderService.sendEmail(emailFrom, template.getMailSubject(), emailTo, notification.getNotificationText(), notification.getId());
+            if(notification.getEmailAddress()  != null) {
+                Email emailFrom = new Email(template.getSmsFrom());
+                Email emailTo = new Email(notification.getEmailAddress());
+                notificationSenderService.sendEmail(emailFrom, template.getMailSubject(), emailTo, notification.getNotificationText(), notification.getId());
+            }
+            if(notification.getPhoneNumber() != null) {
+                notificationSenderService.sendSms(template.getMailSubject(), notification.getPhoneNumber(), notification.getNotificationText(), notification.getId());
+            }
         }
     }
 
