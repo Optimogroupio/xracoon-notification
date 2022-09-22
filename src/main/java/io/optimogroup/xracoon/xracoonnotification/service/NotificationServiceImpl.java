@@ -45,6 +45,9 @@ public class NotificationServiceImpl implements NotificationService {
 
     @Override
     public void validateNotification(NotificationDTO notificationDTO) {
+        if (notificationDTO == null) {
+            throw new NotifierException("Invalid notification Data provided!");
+        }
         if (notificationDTO.getNotificationId() == null) {
             throw new NotifierException("Invalid notification id provided!");
         }
