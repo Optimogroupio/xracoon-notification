@@ -9,4 +9,7 @@ import com.sendgrid.Email;
 public interface NotificationSenderService {
 
     void sendEmail(Email from, String subject, Email to, String description, Long notificationId);
+
+    void sendSms(String subject, String destination, String description, Long notificationId);
+
 }

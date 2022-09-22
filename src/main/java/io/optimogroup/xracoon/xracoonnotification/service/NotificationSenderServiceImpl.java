@@ -3,11 +3,15 @@ package io.optimogroup.xracoon.xracoonnotification.service;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.sendgrid.*;
 import io.optimogroup.xracoon.xracoonnotification.dto.EmailResDTO;
+import io.optimogroup.xracoon.xracoonnotification.dto.SmsOfficeResponse;
 import io.optimogroup.xracoon.xracoonnotification.model.NotifiCationQueue;
+import io.optimogroup.xracoon.xracoonnotification.proxy.SmsofficeProxy;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
+
+import java.io.IOException;
 
 /**
  * @author Shako Davitashvili
@@ -20,9 +24,16 @@ public class NotificationSenderServiceImpl implements NotificationSenderService 
 
     @Value("${sendgrid.apikey}")
     private String emailApiKey;
+    @Value("${smsoffice.api.key}")
+    private String smsApiKey;
+
+    @Value("${smsoffice.api.sender}")
+    private String sender;
     private final NotificationService notificationService;
     private final NotificationLogService notificationLogService;
     private final ObjectMapper objectMapper;
+
+    private final SmsofficeProxy smsofficeProxy;
 
     @Override
     public void sendEmail(Email from, String subject, Email to, String description, Long notificationId) {
@@ -69,6 +80,18 @@ public class NotificationSenderServiceImpl implements NotificationSenderService 
         } catch (Exception e) {
             e.printStackTrace();
             log.error("=== Error while sending email from %s with notification notificationId %s to address %s".formatted(from, notificationId, to));
+        }
+    }
+
+    @Override
+    public void sendSms(String subject, String destination, String description, Long notificationId) {
+        try {
+            retrofit2.Response<SmsOfficeResponse> response = smsofficeProxy.sendSms(smsApiKey, destination, sender, description).execute();
+            log.info("Response from smsoffice for notification {} is {}", notificationId, response.toString());
+        } catch (IOException e) {
+            e.printStackTrace();
+            log.error("Error during sending request to smsoffice for notification {}", notificationId);
+            throw new RuntimeException(e);
         }
     }
 }
