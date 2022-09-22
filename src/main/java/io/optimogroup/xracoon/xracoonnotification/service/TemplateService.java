@@ -5,6 +5,10 @@ import io.optimogroup.xracoon.xracoonnotification.model.Template;
 
 import java.util.List;
 
+/**
+ * @author Shako Davitashvili
+ * @version 1.0.0.1
+ */
 public interface TemplateService {
     Template get(Long id);
 

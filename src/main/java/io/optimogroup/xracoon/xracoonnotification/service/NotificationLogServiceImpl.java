@@ -11,6 +11,11 @@ import org.springframework.stereotype.Service;
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
 
+/**
+ * @author Shako Davitashvili
+ * @version 1.0.0.1
+ */
+
 @Service
 @RequiredArgsConstructor
 @Slf4j

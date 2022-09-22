@@ -4,7 +4,6 @@ import io.optimogroup.xracoon.xracoonnotification.dto.TemplateDTO;
 import io.optimogroup.xracoon.xracoonnotification.exception.NotifierException;
 import io.optimogroup.xracoon.xracoonnotification.model.Template;
 import io.optimogroup.xracoon.xracoonnotification.repository.TemplateRepository;
-import io.swagger.v3.oas.annotations.servers.Server;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -15,6 +14,11 @@ import javax.transaction.Transactional;
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
 import java.util.List;
+
+/**
+ * @author Shako Davitashvili
+ * @version 1.0.0.1
+ */
 
 @Service
 @RequiredArgsConstructor

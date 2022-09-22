@@ -6,6 +6,11 @@ import lombok.Setter;
 import javax.persistence.*;
 import java.sql.Timestamp;
 
+/**
+ * @author Shako Davitashvili
+ * @version 1.0.0.1
+ */
+
 @Entity
 @Table(schema = "NOTIFIER", name = "NOTIFICATION_QUEUE")
 @Getter

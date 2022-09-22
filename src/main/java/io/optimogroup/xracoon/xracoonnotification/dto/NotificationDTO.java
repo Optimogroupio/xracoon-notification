@@ -5,6 +5,11 @@ import lombok.Data;
 
 import java.util.List;
 
+/**
+ * @author Shako Davitashvili
+ * @version 1.0.0.1
+ */
+
 @Data
 @Builder
 public class NotificationDTO {

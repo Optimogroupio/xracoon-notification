@@ -8,6 +8,10 @@ import org.springframework.data.repository.PagingAndSortingRepository;
 
 import java.util.List;
 
+/**
+ * @author Shako Davitashvili
+ * @version 1.0.0.1
+ */
 public interface NotificationRepository extends JpaRepository<NotifiCationQueue, Long>,
         PagingAndSortingRepository<NotifiCationQueue, Long> {
 

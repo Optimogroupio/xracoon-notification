@@ -6,6 +6,11 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.springframework.http.HttpStatus;
 
+/**
+ * @author Shako Davitashvili
+ * @version 1.0.0.1
+ */
+
 @Getter
 @Setter
 @AllArgsConstructor

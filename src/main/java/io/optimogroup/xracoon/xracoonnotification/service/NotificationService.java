@@ -6,6 +6,10 @@ import io.optimogroup.xracoon.xracoonnotification.model.NotifiCationQueue;
 
 import java.util.List;
 
+/**
+ * @author Shako Davitashvili
+ * @version 1.0.0.1
+ */
 public interface NotificationService {
     CreatedNotificationResponseDTO createNotification(NotificationDTO notificationDTO);
 

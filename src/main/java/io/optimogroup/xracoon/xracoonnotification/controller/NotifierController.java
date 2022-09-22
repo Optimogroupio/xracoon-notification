@@ -14,6 +14,11 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+/**
+ * @author Shako Davitashvili
+ * @version 1.0.0.1
+ */
+
 @RestController
 @RequestMapping("notifications")
 @Slf4j

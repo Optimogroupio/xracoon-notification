@@ -18,6 +18,11 @@ import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Objects;
 
+/**
+ * @author Shako Davitashvili
+ * @version 1.0.0.1
+ */
+
 @Service
 @RequiredArgsConstructor
 @Slf4j

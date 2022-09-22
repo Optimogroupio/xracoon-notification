@@ -4,12 +4,15 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.sendgrid.*;
 import io.optimogroup.xracoon.xracoonnotification.dto.EmailResDTO;
 import io.optimogroup.xracoon.xracoonnotification.model.NotifiCationQueue;
-import io.optimogroup.xracoon.xracoonnotification.repository.NotificationLogRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
+/**
+ * @author Shako Davitashvili
+ * @version 1.0.0.1
+ */
 @Service
 @RequiredArgsConstructor
 @Slf4j
