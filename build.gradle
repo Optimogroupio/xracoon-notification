@@ -33,7 +33,7 @@ dependencies {
 	annotationProcessor 'org.projectlombok:lombok'
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 	implementation group: 'com.squareup.retrofit2', name: 'converter-jackson', version: '2.9.0'
-	implementation group: 'com.squareup.okhttp3', name: 'logging-interceptor', version: '3.4.1'
+	implementation group: 'com.squareup.okhttp3', name: 'logging-interceptor', version: '4.10.0'
 	implementation group: 'com.squareup.okhttp', name: 'okhttp', version: '2.7.5'
 }
 
