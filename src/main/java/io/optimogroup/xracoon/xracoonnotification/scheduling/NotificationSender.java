@@ -35,7 +35,11 @@ public class NotificationSender {
     }
 
     public void sentEmails() {
-        for (NotifiCationQueue notification : getNotifications()) {
+        for (NotifiCationQueue notification : getNotifications()) {  // In future take only those records whose fail count is less than 5
+            if(notification.getFailedCounter() >= 5) {
+                log.info("Notification {} has already failed {} times + ", notification.getId(), notification.getFailedCounter());
+                continue;
+            }
             Template template = templateService.get(notification.getTemplateId());
             if(notification.getEmailAddress()  != null) {
                 Email emailFrom = new Email(template.getSmsFrom());
@@ -43,7 +47,7 @@ public class NotificationSender {
                 notificationSenderService.sendEmail(emailFrom, template.getMailSubject(), emailTo, notification.getNotificationText(), notification.getId());
             }
             if(notification.getPhoneNumber() != null) {
-                notificationSenderService.sendSms(template.getMailSubject(), notification.getPhoneNumber(), notification.getNotificationText(), notification.getId());
+                notificationSenderService.sendSms(template.getMailSubject(), notification);
             }
         }
     }

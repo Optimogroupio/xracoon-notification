@@ -1,7 +1,7 @@
 package io.optimogroup.xracoon.xracoonnotification.dto;
 
-import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.util.List;
 
@@ -11,11 +11,11 @@ import java.util.List;
  */
 
 @Data
-@Builder
+@NoArgsConstructor
 public class NotificationDTO {
     private String phoneNumber;
     private String mail;
     private List<String> parameters;
-    private Long notificationId;
+    private Long templateId;
     private Long languageId;
 }

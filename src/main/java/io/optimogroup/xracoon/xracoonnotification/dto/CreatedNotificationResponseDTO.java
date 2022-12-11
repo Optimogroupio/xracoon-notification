@@ -1,12 +1,16 @@
 package io.optimogroup.xracoon.xracoonnotification.dto;
 
 import lombok.Builder;
+import lombok.Data;
+
 import java.sql.Timestamp;
 
 /**
  * @author Shako Davitashvili
  * @version 1.0.0.1
  */
+
+@Data
 @Builder
 public class CreatedNotificationResponseDTO {
 
