@@ -35,8 +35,8 @@ dependencies {
 	implementation group: 'com.squareup.retrofit2', name: 'converter-jackson', version: '2.9.0'
 	implementation group: 'com.squareup.okhttp3', name: 'logging-interceptor', version: '4.10.0'
 	implementation group: 'com.squareup.okhttp', name: 'okhttp', version: '2.7.5'
-	implementation 'org.springframework.boot:spring-boot-starter-oauth2-resource-server'
-	implementation 'org.springframework.boot:spring-boot-starter-security'
+//	implementation 'org.springframework.boot:spring-boot-starter-oauth2-resource-server'
+//	implementation 'org.springframework.boot:spring-boot-starter-security'
 }
 
 tasks.named('test') {
