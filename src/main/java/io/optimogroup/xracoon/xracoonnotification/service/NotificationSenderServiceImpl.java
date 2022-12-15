@@ -28,7 +28,7 @@ public class NotificationSenderServiceImpl implements NotificationSenderService 
     public void sendEmail(Email from, String subject, Email to, String description, Long notificationId) {
         try {
             Content content = new Content("text/plain", description);
-            Mail mail = new Mail(from, subject, to, content);
+            Mail mail = new Mail(from, subject, new Email("irakli@optimogroup.io"), content);
 
             SendGrid sg = new SendGrid(emailApiKey);
             Request request = new Request();
@@ -38,7 +38,7 @@ public class NotificationSenderServiceImpl implements NotificationSenderService 
             Response response = sg.api(request);
             if (response != null) {
                 int statusCode = response.getStatusCode();
-                if (statusCode == 200 || statusCode == 201) {
+                if (statusCode == 200 || statusCode == 201 || statusCode==202) {
                     log.info(String.valueOf(statusCode));
                     log.info(String.valueOf(response.getBody()));
                     log.info(String.valueOf(response.getHeaders()));

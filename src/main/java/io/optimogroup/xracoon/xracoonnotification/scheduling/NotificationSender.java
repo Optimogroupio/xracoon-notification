@@ -39,7 +39,11 @@ public class NotificationSender {
             Template template = templateService.get(notification.getTemplateId());
             Email emailFrom = new Email(template.getSmsFrom());
             Email emailTo = new Email(notification.getEmailAddress());
-            notificationSenderService.sendEmail(emailFrom, template.getMailSubject(), emailTo, notification.getNotificationText(), notification.getId());
+            notificationSenderService.sendEmail(emailFrom,
+                    template.getMailSubject(),
+                    emailTo,
+                    notification.getNotificationText(),
+                    notification.getId());
         }
     }
 
