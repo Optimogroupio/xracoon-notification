@@ -1,6 +1,7 @@
 package io.optimogroup.xracoon.xracoonnotification.dto;
 
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 /**
  * @author Shako Davitashvili

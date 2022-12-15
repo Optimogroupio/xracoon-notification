@@ -20,4 +20,6 @@ public interface NotificationService {
     NotifiCationQueue deleteById(Long notificationId);
 
     NotifiCationQueue get(Long notificationId);
+
+    void saveNotification(NotifiCationQueue notifiCationQueue);
 }
