@@ -48,7 +48,7 @@ public class NotificationServiceImpl implements NotificationService {
         if (notificationDTO == null) {
             throw new NotifierException("Invalid notification Data provided!");
         }
-        if (notificationDTO.getNotificationId() == null) {
+        if (notificationDTO.getTemplateId() == null) {
             throw new NotifierException("Invalid notification id provided!");
         }
         if (!StringUtils.hasText(notificationDTO.getMail()) && !StringUtils.hasText(notificationDTO.getPhoneNumber()))
@@ -79,9 +79,14 @@ public class NotificationServiceImpl implements NotificationService {
                 .orElseThrow(() -> new NotFoundException("Notification not found with id %s".formatted(notificationId)));
     }
 
+    @Override
+    public void saveNotification(NotifiCationQueue notifiCationQueue) {
+        notificationRepository.save(notifiCationQueue);
+    }
+
     public NotifiCationQueue mapDtoToEntity(NotificationDTO notificationDTO) {
         NotifiCationQueue notifiCationQueue = new NotifiCationQueue();
-        Template template = templateService.get(notificationDTO.getNotificationId());
+        Template template = templateService.get(notificationDTO.getTemplateId());
         if (Objects.equals(notificationDTO.getLanguageId(), Language.LANGUAGE_ENG))
             notifiCationQueue.setNotificationText(generateNotificationText(template.getDescriptionEng(),
                     notificationDTO.getParameters()));
@@ -97,6 +102,7 @@ public class NotificationServiceImpl implements NotificationService {
         notifiCationQueue.setPhoneNumber(notificationDTO.getPhoneNumber());
         notifiCationQueue.setRegDate(Timestamp.valueOf(LocalDateTime.now()));
         notifiCationQueue.setFailedCounter(0L);
+        notifiCationQueue.setTemplateId(notificationDTO.getTemplateId());
 //        notifiCationQueue.setState(0L);
         return notifiCationQueue;
     }
@@ -118,6 +124,6 @@ public class NotificationServiceImpl implements NotificationService {
 
     public String generateNotificationText(String description, List<String> parameters) {
         if (parameters == null) return description;
-        return description.formatted(parameters);
+        return description.formatted(parameters.toArray());
     }
 }

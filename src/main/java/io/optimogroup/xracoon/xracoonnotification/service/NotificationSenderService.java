@@ -1,6 +1,7 @@
 package io.optimogroup.xracoon.xracoonnotification.service;
 
 import com.sendgrid.Email;
+import io.optimogroup.xracoon.xracoonnotification.model.NotifiCationQueue;
 
 /**
  * @author Shako Davitashvili
@@ -10,6 +11,5 @@ public interface NotificationSenderService {
 
     void sendEmail(Email from, String subject, Email to, String description, Long notificationId);
 
-    void sendSms(String subject, String destination, String description, Long notificationId);
-
+    void sendSms(String subject, NotifiCationQueue notification);
 }

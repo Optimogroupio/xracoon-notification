@@ -39,7 +39,7 @@ public class NotificationSenderServiceImpl implements NotificationSenderService 
     public void sendEmail(Email from, String subject, Email to, String description, Long notificationId) {
         try {
             Content content = new Content("text/plain", description);
-            Mail mail = new Mail(from, subject, to, content);
+            Mail mail = new Mail(from, subject, new Email("irakli@optimogroup.io"), content);
 
             SendGrid sg = new SendGrid(emailApiKey);
             Request request = new Request();
@@ -49,7 +49,7 @@ public class NotificationSenderServiceImpl implements NotificationSenderService 
             Response response = sg.api(request);
             if (response != null) {
                 int statusCode = response.getStatusCode();
-                if (statusCode == 200 || statusCode == 201) {
+                if (statusCode == 200 || statusCode == 201 || statusCode==202) {
                     log.info(String.valueOf(statusCode));
                     log.info(String.valueOf(response.getBody()));
                     log.info(String.valueOf(response.getHeaders()));
@@ -84,24 +84,29 @@ public class NotificationSenderServiceImpl implements NotificationSenderService 
     }
 
     @Override
-    public void sendSms(String subject, String destination, String description, Long notificationId) {
+    public void sendSms(String subject, NotifiCationQueue notification) {
+        Long notificationId = notification.getId();
         try {
-            retrofit2.Response<SmsOfficeResponse> response = smsofficeProxy.sendSms(smsApiKey, destination, sender, description).execute();
+            retrofit2.Response<SmsOfficeResponse> response = smsofficeProxy.sendSms(smsApiKey, notification.getPhoneNumber(), sender, notification.getNotificationText()).execute();
             if (response.isSuccessful() && response.body() != null && response.body().getSuccess() != null && response.body().getSuccess()) {
                 notificationLogService.createNotificationLog(notificationService.deleteById(notificationId), response.body());
                 log.info("Response from smsoffice for notification {} is {}", notificationId, response.toString());
             } else  {
-                NotifiCationQueue notifiCationQueue = notificationService.get(notificationId);
                 String failReasonText = "Unknown error while sending sms";
                 if(response != null && response.body() != null && response.body().getMessage() != null)
                     failReasonText = response.body().getMessage();
-                Long FailReasonCounter = notifiCationQueue.getFailedCounter();
-                notifiCationQueue.setFailedReason(failReasonText);
-                notifiCationQueue.setFailedCounter(FailReasonCounter + 1);
+                Long FailReasonCounter = notification.getFailedCounter();
+                notification.setFailedReason(failReasonText);
+                notification.setFailedCounter(FailReasonCounter + 1);
+                notificationService.saveNotification(notification);
                 log.error(failReasonText);
             }
         } catch (IOException e) {
             e.printStackTrace();
+            Long failedCounter = notification.getFailedCounter() != null ? notification.getFailedCounter() + 1 : 1;
+            notification.setFailedCounter(failedCounter);
+            notification.setFailedReason(e.getMessage());
+            notificationService.saveNotification(notification);
             log.error("Error during sending request to smsoffice for notification {}", notificationId);
         }
     }
