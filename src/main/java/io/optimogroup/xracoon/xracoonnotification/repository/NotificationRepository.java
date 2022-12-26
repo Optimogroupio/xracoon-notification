@@ -16,6 +16,6 @@ public interface NotificationRepository extends JpaRepository<NotifiCationQueue,
 
 //    List<NotifiCationQueue> findAllByStateIs(Long state, Pageable pageable);
 
-    @Query(value = "SELECT * FROM NOTIFIER.NOTIFICATION_QUEUE FETCH FIRST 10 ROWS ONLY", nativeQuery = true)
+    @Query(value = "SELECT * FROM NOTIFIER.NOTIFICATION_QUEUE WHERE FAILED_COUNTER < 5 ", nativeQuery = true)
     List<NotifiCationQueue> getNotifications();
 }
