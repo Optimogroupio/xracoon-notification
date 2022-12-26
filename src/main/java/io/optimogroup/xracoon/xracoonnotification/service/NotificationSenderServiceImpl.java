@@ -49,7 +49,7 @@ public class NotificationSenderServiceImpl implements NotificationSenderService 
             Response response = sg.api(request);
             if (response != null) {
                 int statusCode = response.getStatusCode();
-                if (statusCode == 200 || statusCode == 201 || statusCode==202) {
+                if (statusCode == 200 || statusCode == 201 || statusCode == 202) {
                     log.info(String.valueOf(statusCode));
                     log.info(String.valueOf(response.getBody()));
                     log.info(String.valueOf(response.getHeaders()));
@@ -78,6 +78,9 @@ public class NotificationSenderServiceImpl implements NotificationSenderService 
             } else
                 log.error("Unknown error Response is null! for emails %s   %s".formatted(from, to));
         } catch (Exception e) {
+            NotifiCationQueue notifiCationQueue = notificationService.get(notificationId);
+            notifiCationQueue.setFailedReason(e.getMessage());
+            notifiCationQueue.setFailedCounter(notifiCationQueue.getFailedCounter() + 1);
             e.printStackTrace();
             log.error("=== Error while sending email from %s with notification notificationId %s to address %s".formatted(from, notificationId, to));
         }
@@ -91,9 +94,9 @@ public class NotificationSenderServiceImpl implements NotificationSenderService 
             if (response.isSuccessful() && response.body() != null && response.body().getSuccess() != null && response.body().getSuccess()) {
                 notificationLogService.createNotificationLog(notificationService.deleteById(notificationId), response.body());
                 log.info("Response from smsoffice for notification {} is {}", notificationId, response.toString());
-            } else  {
+            } else {
                 String failReasonText = "Unknown error while sending sms";
-                if(response != null && response.body() != null && response.body().getMessage() != null)
+                if (response != null && response.body() != null && response.body().getMessage() != null)
                     failReasonText = response.body().getMessage();
                 Long FailReasonCounter = notification.getFailedCounter();
                 notification.setFailedReason(failReasonText);

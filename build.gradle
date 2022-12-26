@@ -2,6 +2,7 @@ plugins {
 	id 'org.springframework.boot' version '2.7.3'
 	id 'io.spring.dependency-management' version '1.0.13.RELEASE'
 	id 'java'
+	id 'com.google.cloud.tools.jib' version '3.2.1'
 }
 
 group = 'io.optimogroup.xracoon'
@@ -42,3 +43,27 @@ dependencies {
 tasks.named('test') {
 	useJUnitPlatform()
 }
+
+def getDockerLoginCommand = {
+	def ecrStdOut = new ByteArrayOutputStream()
+	exec {
+		//commandLine
+		commandLine 'aws', 'ecr', 'get-login-password','--profile','shako'
+		standardOutput = ecrStdOut
+	}
+	final String dockerLoginCommand = ecrStdOut.toString()
+	return dockerLoginCommand
+}
+
+jib {
+	to {
+		image = "395521588212.dkr.ecr.eu-central-1.amazonaws.com/xracoon-notification"
+		auth {
+			username = "AWS"
+			password = getDockerLoginCommand()
+		}
+		tags = [project.version]
+	}
+}
+
+
